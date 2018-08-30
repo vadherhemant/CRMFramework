@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Free CRM automation test by Hemant">
+	<test thread-count="5" name="This is Free CRM test">
+		<classes>
+			<class name="com.crm.tests.ContactsPageTest" />
+			<class name="com.crm.tests.HomePageTest" />
+			<class name="com.crm.tests.LoginPageTest" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
