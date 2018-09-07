@@ -1,55 +1,55 @@
 package com.crm.tests;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.crm.base.TestBase;
 import com.crm.pages.ContactsPage;
 import com.crm.pages.HomePage;
 import com.crm.pages.LoginPage;
-import com.crm.util.TestUtil;
 
-public class HomePageTest extends TestBase{
-	
+public class HomePageTest extends TestBase {
+
 	HomePage homePage;
 	LoginPage loginPage;
 	ContactsPage contactsPage;
-	TestUtil testUtil;
-	
+	SoftAssert softAssert = new SoftAssert();
+
 	public HomePageTest() {
 		super();
-	}
-	
-	@BeforeMethod
-	public void setup() {
 		initialize();
 		loginPage = new LoginPage();
-		homePage = loginPage.loginCRM(properties.getProperty("username"), properties.getProperty("password"));
-	}
-	
-	
-/*	@Test (priority = 0)
-	public void verifyPageTitleTest() {
-		String title = homePage.getPageTitle();
-		assertEquals(title, "CRMPRO", "title did not match");
-	}*/
-	
-	@Test(priority = 1)
-	public void verifyContactsLinkTest() {
-		testUtil = new TestUtil();
-		contactsPage = homePage.clickOnContacts();
-		String title = contactsPage.getPageTitle();
-		assertEquals(title, "CRMPRO","Failed to verify Contacts Page Title.");
-		assertTrue(contactsPage.isContactsGridDisplayed());
 	}
 
-	
-	@AfterMethod
+	@BeforeMethod
+	public void setup() {
+		homePage = loginPage.loginCRM(properties.getProperty("username"), properties.getProperty("password"));
+	}
+
+	@Test(priority = 0)
+	public void verifyPageTitleTest() {
+		softAssert.assertEquals(homePage.getPageTitle(), "CRMPRO", "title did not match");
+		homePage.logOutUser();
+		
+		softAssert.assertAll();
+	}
+
+	@Test(priority = 1)
+	public void verifyContactsLinkTest() {
+		contactsPage = homePage.clickOnContacts();
+		String title = contactsPage.getPageTitle();
+		softAssert.assertEquals(title, "CRMPRO", "Failed to verify Contacts Page Title.");
+		softAssert.assertTrue(contactsPage.isContactsGridDisplayed());
+		contactsPage.logOutUser();
+
+		softAssert.assertAll();
+	}
+
+	@AfterTest
 	public void tearDown() {
 		driver.quit();
+		driver=null;
 	}
 }

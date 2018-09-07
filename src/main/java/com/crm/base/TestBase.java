@@ -3,7 +3,6 @@ package com.crm.base;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.EventListener;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +22,7 @@ public class TestBase {
 	public static Properties properties;
 	public static EventFiringWebDriver e_driver;
 
+
 	public TestBase() {
 
 		properties = new Properties();
@@ -39,6 +39,7 @@ public class TestBase {
 	}
 
 	public static void initialize() {
+		
 		String browserName = properties.getProperty("BrowserName");
 
 		if (browserName.equalsIgnoreCase("Chrome")) {
@@ -57,12 +58,12 @@ public class TestBase {
 			System.setProperty("webdriver.ie.driver", properties.getProperty("IEDriverPath"));
 			driver = new InternetExplorerDriver();
 		}
-		
-		e_driver = new EventFiringWebDriver(driver);
+
+/*		e_driver = new EventFiringWebDriver(driver);
 		WebEventListener eventListener = new WebEventListener();
 		e_driver.register(eventListener);
 		
-		driver = e_driver;
+		driver = e_driver;*/
 		
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();

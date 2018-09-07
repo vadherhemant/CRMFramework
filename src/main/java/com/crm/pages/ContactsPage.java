@@ -2,7 +2,6 @@ package com.crm.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -37,6 +36,12 @@ public class ContactsPage extends TestBase {
 	@FindBy(xpath = "//a[@_name]")
 	//@CacheLookup
 	WebElement companyEntered;
+	
+	@FindBy(xpath = "//div[@class='pagination']//a[contains(text(),'4')]")
+	WebElement page2;
+	
+	@FindBy(xpath = "//a[contains(text(),'Logout')]")
+	WebElement logoutButton;
 
 	public ContactsPage() {
 		PageFactory.initElements(driver, this);
@@ -57,6 +62,11 @@ public class ContactsPage extends TestBase {
 				By.xpath("//a[contains(text(),'" + name + "') and @context='contact']//parent::td//parent::tr//td"))
 				.click();
 	}
+	
+	public void logOutUser() {
+		logoutButton.click();
+	}
+
 
 	public String getPageTitle() {
 		return driver.getTitle();
@@ -89,6 +99,10 @@ public class ContactsPage extends TestBase {
 				.findElement(By.xpath("//a[contains(text(),'" + name
 						+ "') and @context='contact']//parent::td//parent::tr//td//input[@type='checkbox']"))
 				.isSelected();
+	}
+	
+	public void gotoNextPage() {
+		page2.click();
 	}
 
 }

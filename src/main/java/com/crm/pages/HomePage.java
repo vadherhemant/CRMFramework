@@ -35,7 +35,6 @@ public class HomePage extends TestBase {
 		builder.moveToElement(contactsPageElement).build().perform();
 		newContact.click();
 		return new ContactsPage();
-
 	}
 
 	public ContactsPage clickOnContacts() {
@@ -45,15 +44,12 @@ public class HomePage extends TestBase {
 	}
 
 	public String getPageTitle() {
-		String title = driver.getTitle();
-
-		return title;
+		return driver.getTitle();
 	}
 
 	public void logOutUser() {
-		//switchToFrameMainPanel();
+		switchToFrameMainPanel();
 		logoutButton.click();
-		//testUtil.switchToFrameDefaultContent();
 	}
 
 	public boolean isLoggedInUserNameDisplayed() {

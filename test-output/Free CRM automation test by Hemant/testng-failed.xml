@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Free CRM automation test by Hemant]">
-  <test name="This is Free CRM test(failed)">
+  <test thread-count="5" name="This is Free CRM test(failed)">
     <classes>
-      <class name="com.crm.tests.HomePageTest">
-        <methods>
-          <include name="verifyContactsLinkTest"/>
-          <include name="tearDown"/>
-          <include name="setup"/>
-        </methods>
-      </class> <!-- com.crm.tests.HomePageTest -->
-      <class name="com.crm.tests.LoginPageTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="setup"/>
-        </methods>
-      </class> <!-- com.crm.tests.LoginPageTest -->
       <class name="com.crm.tests.ContactsPageTest">
         <methods>
+          <include name="createNewContacts"/>
+          <include name="selectTest2CheckBoxTest"/>
           <include name="setup"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- com.crm.tests.ContactsPageTest -->
+      <class name="com.crm.tests.LoginPageTest">
+        <methods>
+          <include name="tearDown"/>
+          <include name="LoginTest"/>
+          <include name="pageTitleTest"/>
+        </methods>
+      </class> <!-- com.crm.tests.LoginPageTest -->
+      <class name="com.crm.tests.HomePageTest">
+        <methods>
+          <include name="verifyContactsLinkTest"/>
+          <include name="tearDown"/>
+          <include name="verifyPageTitleTest"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- com.crm.tests.HomePageTest -->
     </classes>
   </test> <!-- This is Free CRM test(failed) -->
 </suite> <!-- Failed suite [Free CRM automation test by Hemant] -->

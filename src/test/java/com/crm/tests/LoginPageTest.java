@@ -1,54 +1,51 @@
 package com.crm.tests;
 
-import static org.testng.Assert.assertEquals;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.crm.base.TestBase;
 import com.crm.pages.CommonPage;
 import com.crm.pages.HomePage;
 import com.crm.pages.LoginPage;
 
-public class LoginPageTest extends TestBase{
-	
+public class LoginPageTest extends TestBase {
+
 	LoginPage loginPage;
 	HomePage homePage;
 	CommonPage commonPage;
-	
+	SoftAssert softAssert = new SoftAssert();
+
 	public LoginPageTest() {
 		super();
-	}
-	
-	@BeforeMethod
-	public void setup() {
 		initialize();
 		loginPage = new LoginPage();
 	}
-	
-	
-	@Test (priority=0)
+
+	@Test(priority = 0)
 	public void pageTitleTest() {
 		String title = loginPage.getPageTitle();
-		assertEquals(title, "#1 Free CRM software in the cloud for sales and service", "Thte page title teste got failed");
+		softAssert.assertEquals(title, "#1 Free CRM software in the cloud for sales and service",
+				"The page title teste got failed");
+
+		softAssert.assertAll();
 	}
-	
-	@Test (priority=1)
+
+	@Test(priority = 1)
 	public void LoginTest() {
 		homePage = loginPage.loginCRM(properties.getProperty("username"), properties.getProperty("password"));
 		String HomePageTitle = homePage.getPageTitle();
-		assertEquals(HomePageTitle, "CRMPRO","Login Failed this is not a home page title.");
-		
-		assertEquals(true, homePage.isLoggedInUserNameDisplayed());
+		softAssert.assertEquals(HomePageTitle, "CRMPRO", "Login Failed this is not a home page title.");
+		softAssert.assertEquals(true, homePage.isLoggedInUserNameDisplayed());
 		homePage.logOutUser();
+
+		softAssert.assertAll();
 	}
-	
-	@AfterMethod
+
+	@AfterClass
 	public void tearDown() {
 		driver.quit();
+		driver = null;
 	}
-	
-	
 
 }

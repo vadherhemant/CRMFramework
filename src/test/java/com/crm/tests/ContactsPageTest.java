@@ -1,6 +1,6 @@
 package com.crm.tests;
 
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,14 +20,27 @@ public class ContactsPageTest extends TestBase {
 
 	public ContactsPageTest() {
 		initialize();
+		loginPage = new LoginPage();
 	}
 
 	@BeforeMethod
 	public void setup() {
-		loginPage = new LoginPage();
 		homePage = loginPage.loginCRM(properties.getProperty("username"), properties.getProperty("password"));
 	}
-	
+
+	@Test(priority = 1)
+	public void selectTest2CheckBoxTest() {
+		contactsPage = homePage.clickOnContacts();
+		contactsPage.gotoNextPage();
+		contactsPage.selectContactsByName("test 2 last name 2");
+		softAssert.assertTrue(contactsPage.isRecordSelected("test 2 last name 2"));
+		contactsPage.selectContactsByName("test name last test name");
+		softAssert.assertTrue(contactsPage.isRecordSelected("test name last test name"));
+		contactsPage.logOutUser();
+		
+		softAssert.assertAll();
+	}
+
 	@DataProvider
 	public Object[][] getDataFromCRMExcel() {
 		return TestUtil.getDataFromExcel("contacts");
@@ -36,35 +49,20 @@ public class ContactsPageTest extends TestBase {
 	@Test(priority = 2, dataProvider = "getDataFromCRMExcel")
 	public void createNewContacts(String title, String fName, String lName, String cName) {
 		contactsPage = homePage.clickOnNewContacts();
-		//contactsPage.createNewContacts("Mr.", "firstName entered4", "surName entered4", "companyName entered4");
 		contactsPage.createNewContacts(title, fName, lName, cName);
 		softAssert.assertEquals(contactsPage.getFirstName(), fName);
 		softAssert.assertEquals(contactsPage.getSurName(), lName);
 		softAssert.assertEquals(contactsPage.getCompanyName(), cName);
-		//System.out.println(contactsPage.getSaluationTitle());
-		homePage.logOutUser();
-		
+		contactsPage.logOutUser();
+
 		softAssert.assertAll();
 	}
 
-/*	@Test(priority = 1)
-	public void selectTest2CheckBoxTest() {
-		contactsPage = homePage.clickOnContacts();
-		softAssert.assertFalse(contactsPage.isRecordSelected("test 2 last name 2"));
-		contactsPage.selectContactsByName("test 2 last name 2");
-		softAssert.assertTrue(contactsPage.isRecordSelected("test 2 last name 2"));
 
-		softAssert.assertFalse(contactsPage.isRecordSelected("test name last test name"));
-		contactsPage.selectContactsByName("test name last test name");
-		softAssert.assertTrue(contactsPage.isRecordSelected("test name last test name"));
-		homePage.logOutUser();
-		softAssert.assertAll();
-	}*/
-
-	
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
-		 //driver.quit();
+		driver.quit();
+		driver=null;
 	}
 
 }
