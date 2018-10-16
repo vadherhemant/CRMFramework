@@ -14,7 +14,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.crm.util.TestUtil;
-import com.crm.util.WebEventListener;
 
 public class TestBase {
 
@@ -71,8 +70,6 @@ public class TestBase {
 		driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);
 		
 		driver.get(properties.getProperty("url"));
-		
-		
 	}
 
 }
